@@ -1,0 +1,1 @@
+# ArgoCD with kustomize-pass
