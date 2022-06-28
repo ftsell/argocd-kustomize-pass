@@ -12,7 +12,7 @@ If you or your organisation needs another version, you will have to build the im
 ## Usage
 
 1. This repository contains the source *Dockerfile* to build an image derived from `quay.io/argoproj/argocd`.
-   You can either use the *Dockerfile* to build your own image or use the provided image from [`ghcr.io/ftsell/argocd-kustomize-pass:v2.4.3`](https://github.com/ftsell/argocd-kustomize-pass/pkgs/container/argocd-kustomize-pass).
+   You can either use the *Dockerfile* to build your own image or use the provided image from [`ghcr.io/ftsell/argocd-kustomize-pass`](https://github.com/ftsell/argocd-kustomize-pass/pkgs/container/argocd-kustomize-pass).
 
    This repository does not contain helm charts or other *ArgoCD* related manifests.
    This means that, in order to use this, you will have to follow the upstream *ArgoCD* instructions in order to deploy it but instead of using the normal image, you will have to use this repositories image instead for the `argocd-repo-server` deployment.
