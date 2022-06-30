@@ -4,7 +4,7 @@ FROM docker.io/argoproj/argocd:v2.4.3
 ARG KUSTOMIZE_PASS_VERSION=v0.5.0
 USER root
 RUN apt-get update && \
-    apt-get install -y wget libgpgme11 && \
+    apt-get install -y wget libgpgme11 pass && \
     \
     wget "https://github.com/ftsell/kustomize-pass/releases/download/$KUSTOMIZE_PASS_VERSION/kustomize-pass--linux-ubuntu-2204" -O /usr/local/bin/kustomize-pass &&\
     chmod +x /usr/local/bin/kustomize-pass &&\
