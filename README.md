@@ -25,3 +25,8 @@ If you or your organisation needs another version, you will have to build the im
       This is required because the *ArgoCD* manifests run the container with a read-only filesystem by default.
       A possible value would be `XDG_DATA_HOME=/tmp/data`.
    3. Se the environment variable `GNUPGHOME=/app/config/gpg/keys` because that is where *ArgoCD* accumulates all keys during startup.
+
+### Usage Example
+
+This project is used by [Viva con Agua](https://www.vivaconagua.org/) to deploy its *ArgoCD*.
+You can view the deployment configuration at the [Viva-con-Agua/argocd-deploy](https://github.com/Viva-con-Agua/argocd-deploy) repository.
