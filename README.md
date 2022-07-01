@@ -17,20 +17,11 @@ If you or your organisation needs another version, you will have to build the im
    This repository does not contain helm charts or other *ArgoCD* related manifests.
    This means that, in order to use this, you will have to follow the upstream *ArgoCD* instructions in order to deploy it but instead of using the normal image, you will have to use this repositories image instead for the `argocd-repo-server` deployment.
 
-2. Additionally, you will need to configure *ArgoCD* to provide a secret gpg key in order for the *pass* password store to be decrypted.
-
-   However, this is not yet documented but will be soon.
-
-### Usage example
-
-For example, if you deploy *ArgoCD* via kustomize, you could use the following kustomization:
-```yaml
-# kustomization.yaml
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.3/manifests/ha/install.yaml
-images:
-  - name: quay.io/argoproj/argocd
-    newName: ghcr.io/ftsell/argocd-kustomize-pass
-```
+2. Additionally, you will need to configure *ArgoCD* a bit to allow *kustomize-pass* to work correctly:
+   1. Create a gpg secret key and provide it to *ArgoCD* inside its *gpg-keys* volume.
+      The file must be named like the key fingerprint.
+      On startup, *ArgoCD* will automatically load all key files (public and secret) from here into a keyring.
+   2. Set the environment variable `XDG_DATA_HOME` to some place that *kustomize-pass* can write files.
+      This is required because the *ArgoCD* manifests run the container with a read-only filesystem by default.
+      A possible value would be `XDG_DATA_HOME=/tmp/data`.
+   3. Se the environment variable `GNUPGHOME=/app/config/gpg/keys` because that is where *ArgoCD* accumulates all keys during startup.
