@@ -1,4 +1,4 @@
-FROM docker.io/argoproj/argocd:v2.4.13
+FROM docker.io/argoproj/argocd:v2.4.14
 
 # install kustomize-tools and its dependencies
 ARG KUSTOMIZE_PASS_VERSION=v0.5.1
