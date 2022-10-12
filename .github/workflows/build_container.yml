@@ -23,10 +23,10 @@ jobs:
       - id: get-dockerfile-info
         name: get version from dockerfile
         run: |
-          IMAGE=$(sed -nr 's/FROM (.*):(.*)/\1/p' Dockerfile)
+          IMAGE=$(sed -nr 's/FROM (.*):(.*) as argocd/\1/p' Dockerfile)
           echo "image=$IMAGE"
           echo "::set-output name=image::$IMAGE"
-          VERSION=$(sed -nr 's/FROM (.*):(.*)/\2/p' Dockerfile)
+          VERSION=$(sed -nr 's/FROM (.*):(.*) as argocd/\2/p' Dockerfile)
           echo "version=$VERSION"
           echo "::set-output name=version::$VERSION"
         shell: bash
@@ -39,6 +39,7 @@ jobs:
         with:
           context: .
           push: true
+          target: argocd
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.get-dockerfile-info.outputs.version }}

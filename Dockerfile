@@ -1,4 +1,20 @@
-FROM docker.io/argoproj/argocd:v2.4.14
+# build a kustomize version with patched issue
+FROM docker.io/golang:1.19-bullseye as build-kustomize
+WORKDIR /app
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update &&\
+    apt-get install -y build-essential git
+RUN git clone https://github.com/kubernetes-sigs/kustomize.git &&\
+    cd kustomize/kustomize &&\
+    git fetch origin pull/4654/head:fix-krm-exec-function &&\
+    git checkout fix-krm-exec-function &&\
+    go build .
+
+
+
+FROM docker.io/argoproj/argocd:v2.4.14 as argocd
+# install kustomize with patched issue
+COPY --from=build-kustomize /app/kustomize/kustomize/kustomize /usr/local/bin/kustomize-krm-function-patched
 
 # install kustomize-tools and its dependencies
 ARG KUSTOMIZE_PASS_VERSION=v0.5.1
