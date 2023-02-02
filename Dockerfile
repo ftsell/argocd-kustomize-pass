@@ -12,7 +12,7 @@ RUN git clone https://github.com/kubernetes-sigs/kustomize.git &&\
 
 
 
-FROM docker.io/argoproj/argocd:v2.5.9 as argocd
+FROM docker.io/argoproj/argocd:v2.5.10 as argocd
 # install kustomize with patched issue
 COPY --from=build-kustomize /app/kustomize/kustomize/kustomize /usr/local/bin/kustomize-krm-function-patched
 
