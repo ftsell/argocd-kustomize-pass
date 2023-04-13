@@ -6,17 +6,17 @@ RUN apt-get update &&\
     apt-get install -y build-essential git
 RUN git clone https://github.com/kubernetes-sigs/kustomize.git &&\
     cd kustomize/kustomize &&\
-    git fetch origin pull/4654/head:fix-krm-exec-function &&\
-    git checkout fix-krm-exec-function &&\
+    git fetch origin release-kustomize-v5.0 &&\
+    git checkout release-kustomize-v5.0 &&\
     go build .
 
 
 
 FROM docker.io/argoproj/argocd:v2.6.7 as argocd
 # install kustomize with patched issue
-COPY --from=build-kustomize /app/kustomize/kustomize/kustomize /usr/local/bin/kustomize-krm-function-patched
+COPY --from=build-kustomize /app/kustomize/kustomize/kustomize /usr/local/bin/kustomize5
 
-# install kustomize-tools and its dependencies
+# install kustomize-pass and its dependencies
 ARG KUSTOMIZE_PASS_VERSION=v0.5.1
 USER root
 RUN apt-get update && \
