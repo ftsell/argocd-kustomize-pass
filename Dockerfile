@@ -12,7 +12,7 @@ RUN git clone https://github.com/kubernetes-sigs/kustomize.git &&\
 
 
 
-FROM quay.io/argoproj/argocd:v2.8.2 as argocd
+FROM quay.io/argoproj/argocd:v2.8.3 as argocd
 # install kustomize with patched issue
 COPY --from=build-kustomize /app/kustomize/kustomize/kustomize /usr/local/bin/kustomize5
 
