@@ -1,20 +1,8 @@
-# build a kustomize version with patched issue
-FROM docker.io/golang:1.20-bullseye as build-kustomize
-WORKDIR /app
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update &&\
-    apt-get install -y build-essential git
-RUN git clone https://github.com/kubernetes-sigs/kustomize.git &&\
-    cd kustomize/kustomize &&\
-    git fetch origin release-kustomize-v5.0 &&\
-    git checkout release-kustomize-v5.0 &&\
-    go build .
-
-
-
 FROM quay.io/argoproj/argocd:v2.9.2 as argocd
-# install kustomize with patched issue
-COPY --from=build-kustomize /app/kustomize/kustomize/kustomize /usr/local/bin/kustomize5
+
+# provide /usr/local/bin/kustomize5 for compatibility purposes
+USER root
+RUN ln -s $(which kustomize) /usr/local/bin/kustomize5
 
 # install kustomize-pass and its dependencies
 ARG KUSTOMIZE_PASS_VERSION=v0.5.1
