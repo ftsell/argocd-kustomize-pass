@@ -1,5 +1,5 @@
 # build a kustomize version with patched issue
-FROM docker.io/golang:1.20-bullseye as build-kustomize
+FROM docker.io/golang:1.21-bullseye as build-kustomize
 WORKDIR /app
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update &&\
